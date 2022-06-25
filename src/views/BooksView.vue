@@ -1,6 +1,6 @@
 <template>
   <h1>Books</h1>
-  <find-input @find-books="findBooks"></find-input>
+  <find-input @find-for-text="findBooks"></find-input>
   <br />
   <br />
   <content-table
@@ -12,12 +12,12 @@
 </template>
 
 <script setup>
-import ContentTable from "../components/ContentTable.vue";
-import FindInput from "../components/FindInput.vue";
-import { reactive } from "@vue/reactivity";
-import { books, clearAllBooks, addBook, deleteByIndex } from "../store/books";
+import ContentTable from "@/components/ContentTable.vue";
+import FindInput from "@/components/FindInput.vue";
+import { books, clearAllBooks, addBook, deleteByIndex } from "@/store/books";
+import { fetchData } from "@/store/utils";
 
-const tableHeader = reactive([
+const tableHeader = [
   { columnData: "isbn13", columnLabel: "ISBN 13" },
   { columnData: "name", columnLabel: "Name" },
   { columnData: "authors", columnLabel: "Authors" },
@@ -25,7 +25,7 @@ const tableHeader = reactive([
   { columnData: "price", columnLabel: "Price" },
   { columnData: "categories", columnLabel: "Categories" },
   { columnData: "picture", columnLabel: "Picture" },
-]);
+];
 
 function deleteDataByIndex(index) {
   deleteByIndex(index);
@@ -34,8 +34,14 @@ function deleteDataByIndex(index) {
 async function findBooks(bookName) {
   const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${bookName.value}&key=AIzaSyDGNv2Od-EQZlMdGlx7K6uX2kBMIjaJPtc&maxResults=40`;
 
-  const response = await fetch(url);
-  const result = await response.json();
+  const result = await fetchData(url);
+
+  if (result === undefined) {
+    alert(
+      "Cannot load data. Our engeneers are already working on it. Please, try later"
+    );
+    return;
+  }
 
   clearAllBooks();
 

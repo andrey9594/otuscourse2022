@@ -1,26 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomePage from "./views/HomeView";
+import HomePage from "@/views/HomeView.vue";
 
 const routes = [
   {
     path: "/",
+    name: "home",
     component: HomePage,
   },
   {
     path: "/books",
-    component: () => import("./views/BooksView.vue"),
+    name: "books",
+    component: () => import("@/views/BooksView.vue"),
   },
   {
     path: "/books/add",
-    component: () => import("./views/NewBookView.vue"),
+    name: "addBook",
+    component: () => import("@/views/NewBookView.vue"),
   },
   {
     path: "/authors",
-    component: () => import("./views/AuthorsView.vue"),
+    name: "authors",
+    component: () => import("@/views/AuthorsView.vue"),
   },
   {
     path: "/authors/add",
-    component: () => import("./views/NewAuthorView.vue"),
+    name: "addAuthor",
+    component: () => import("@/views/NewAuthorView.vue"),
   },
 ];
 

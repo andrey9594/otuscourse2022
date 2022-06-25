@@ -4,37 +4,37 @@
   <div class="row">
     <div class="col">ISBN 13:</div>
     <div class="col">
-      <el-input v-model="isbn13Input" class="input" clearable />
+      <el-input v-model="bookFields.isbn13Input" class="input" clearable />
     </div>
 
     <div class="col">Name:</div>
     <div class="col">
-      <el-input v-model="nameInput" class="input" clearable />
+      <el-input v-model="bookFields.nameInput" class="input" clearable />
     </div>
 
     <div class="col">Authors:</div>
     <div class="col">
-      <el-input v-model="authorsInput" class="input" clearable />
+      <el-input v-model="bookFields.authorsInput" class="input" clearable />
     </div>
 
     <div class="col">Description:</div>
     <div class="col">
-      <el-input v-model="descriptionInput" class="input" clearable />
+      <el-input v-model="bookFields.descriptionInput" class="input" clearable />
     </div>
 
     <div class="col">Price:</div>
     <div class="col">
-      <el-input v-model="priceInput" class="input" clearable />
+      <el-input v-model="bookFields.priceInput" class="input" clearable />
     </div>
 
     <div class="col">Categories:</div>
     <div class="col">
-      <el-input v-model="categoriesInput" class="input" clearable />
+      <el-input v-model="bookFields.categoriesInput" class="input" clearable />
     </div>
 
     <div class="col">Picture url:</div>
     <div class="col">
-      <el-input v-model="pictureInput" class="input" clearable />
+      <el-input v-model="bookFields.pictureInput" class="input" clearable />
     </div>
 
     <div class="col">
@@ -61,16 +61,18 @@
 
 <script setup>
 import { addBook } from "@/store/books";
-import { ref } from "@vue/reactivity";
-import { computed } from "@vue/runtime-core";
+import { reactive, ref } from "vue";
+import { computed } from "vue";
 
-const isbn13Input = ref("");
-const nameInput = ref("");
-const authorsInput = ref("");
-const descriptionInput = ref("");
-const priceInput = ref("");
-const categoriesInput = ref("");
-const pictureInput = ref("");
+const bookFields = reactive({
+  isbn13Input: "",
+  nameInput: "",
+  authorsInput: "",
+  descriptionInput: "",
+  priceInput: "",
+  categoriesInput: "",
+  pictureInput: "",
+});
 
 const isWarning = ref("false");
 const isWarningChange = computed(() => isWarning.value);
@@ -78,42 +80,42 @@ const isSuccess = ref("false");
 const isSuccessChange = computed(() => isSuccess.value);
 
 function submitNewBook() {
-  if (isNotEntered(isbn13Input)) {
+  if (isNotEntered(bookFields.isbn13Input)) {
     showAlert("Please enter ISBN 13");
     return;
   }
-  if (isNotEntered(nameInput)) {
+  if (isNotEntered(bookFields.nameInput)) {
     showAlert("Please enter name");
     return;
   }
-  if (isNotEntered(authorsInput)) {
+  if (isNotEntered(bookFields.authorsInput)) {
     showAlert("Please enter authors");
     return;
   }
 
   let description = "Unknown";
-  if (descriptionInput.value) {
-    description = descriptionInput.value;
+  if (bookFields.descriptionInput) {
+    description = bookFields.descriptionInput;
   }
 
   let price = "Unknown";
-  if (priceInput.value) {
-    price = priceInput.value;
+  if (bookFields.priceInput) {
+    price = bookFields.priceInput;
   }
 
   let categories = "Unknown";
-  if (categoriesInput.value) {
-    categories = categoriesInput.value;
+  if (bookFields.categoriesInput) {
+    categories = bookFields.categoriesInput;
   }
 
   addBook({
-    isbn13: isbn13Input,
-    name: nameInput,
-    authors: authorsInput,
+    isbn13: bookFields.isbn13Input,
+    name: bookFields.nameInput,
+    authors: bookFields.authorsInput,
     description: description,
     price: price,
     categories: categories,
-    picture: pictureInput,
+    picture: bookFields.pictureInput,
   });
 
   showSuccessAlertElement();
@@ -137,7 +139,7 @@ function showSuccessAlertElement() {
 }
 
 function isNotEntered(input) {
-  return !input.value || input.value.length === 0;
+  return !input || input.length === 0;
 }
 </script>
 

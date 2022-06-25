@@ -11,16 +11,16 @@
       :active-text-color="'#fff200'"
       :collapse-transition="false"
     >
-      <el-menu-item route="/books" index="/books">
+      <el-menu-item :index="{ name: 'books' }">
         <span>Books</span>
       </el-menu-item>
-      <el-menu-item route="/books/add" index="/books/add">
+      <el-menu-item :index="{ name: 'addBook' }">
         <span>New book</span>
       </el-menu-item>
-      <el-menu-item route="/authors" index="/authors">
+      <el-menu-item :index="{ name: 'authors' }">
         <span>Authors</span>
       </el-menu-item>
-      <el-menu-item route="/authors/add" index="/authors/add">
+      <el-menu-item :index="{ name: 'addAuthor' }">
         <span>New author</span>
       </el-menu-item>
     </el-menu>
@@ -32,7 +32,7 @@ const BACKGROUND_COLOR = "#007077";
 </script>
 
 <style lang="scss" scoped>
-@import "../element-variables.scss";
+@import "@/element-variables.scss";
 .header-nav {
   li {
     margin-right: 20px;
@@ -107,7 +107,7 @@ const BACKGROUND_COLOR = "#007077";
 
   &__link {
     display: block;
-    background-image: url("../assets/images/logo.png");
+    background-image: url("@/assets/images/logo.png");
     height: 100%;
     width: 100%;
     background-size: cover;

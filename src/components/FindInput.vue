@@ -1,19 +1,18 @@
 <template>
-  <input class="find" v-model="findText" @keyup.enter="find" />
+  <input class="find" v-model="findForText" @keyup.enter="find" />
   <button @click="find">Search</button>
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
+import { ref } from "vue";
 import { defineEmits } from "vue";
 
-let findText = ref("");
+let findForText = ref("");
 
-const emit = defineEmits(["findBooks", "findAuthors"]);
+const emit = defineEmits(["findForText"]);
 
 function find() {
-  emit("findBooks", findText);
-  emit("findAuthors", findText);
+  emit("findForText", findForText);
 }
 </script>
 

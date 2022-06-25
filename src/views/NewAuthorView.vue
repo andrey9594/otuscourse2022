@@ -5,7 +5,7 @@
     <div class="col">Birth date:</div>
     <div class="col">
       <el-date-picker
-        v-model="birthDateInput"
+        v-model="authorFields.birthDateInput"
         type="date"
         class="input"
         clearable
@@ -14,17 +14,17 @@
 
     <div class="col">Name:</div>
     <div class="col">
-      <el-input v-model="nameInput" class="input" clearable />
+      <el-input v-model="authorFields.nameInput" class="input" clearable />
     </div>
 
     <div class="col">Top work:</div>
     <div class="col">
-      <el-input v-model="topWorkInput" class="input" clearable />
+      <el-input v-model="authorFields.topWorkInput" class="input" clearable />
     </div>
 
     <div class="col">Work count:</div>
     <div class="col">
-      <el-input v-model="workCountInput" class="input" clearable />
+      <el-input v-model="authorFields.workCountInput" class="input" clearable />
     </div>
 
     <div class="col">
@@ -51,13 +51,15 @@
 
 <script setup>
 import { addAuthor } from "@/store/authors";
-import { ref } from "@vue/reactivity";
-import { computed } from "@vue/runtime-core";
+import { reactive, ref } from "vue";
+import { computed } from "vue";
 
-const nameInput = ref("");
-const birthDateInput = ref("");
-const topWorkInput = ref("");
-const workCountInput = ref("");
+const authorFields = reactive({
+  nameInput: "",
+  birthDateInput: "",
+  topWorkInput: "",
+  workCountInput: "",
+});
 
 const isWarning = ref("false");
 const isWarningChange = computed(() => isWarning.value);
@@ -65,34 +67,34 @@ const isSuccess = ref("false");
 const isSuccessChange = computed(() => isSuccess.value);
 
 function submitNewAuthor() {
-  if (isNotEntered(nameInput)) {
+  if (isNotEntered(authorFields.nameInput)) {
     showAlert("Please enter name");
     return;
   }
-  if (isNotEntered(workCountInput)) {
+  if (isNotEntered(authorFields.workCountInput)) {
     showAlert("Please enter work count");
     return;
   }
-  if (!isNumeric(workCountInput.value)) {
+  if (!isNumeric(authorFields.workCountInput)) {
     showAlert("Work count must be a positive number");
     return;
   }
 
   let birthDate = "Unknown";
-  if (birthDateInput.value) {
-    birthDate = birthDateInput.value;
+  if (authorFields.birthDateInput) {
+    birthDate = authorFields.birthDateInput;
   }
 
   let topWork = "Unknown";
-  if (topWorkInput.value) {
-    topWork = topWorkInput.value;
+  if (authorFields.topWorkInput) {
+    topWork = authorFields.topWorkInput;
   }
 
   addAuthor({
-    name: nameInput,
+    name: authorFields.nameInput,
     birthDate: birthDate,
     topWork: topWork,
-    workCount: workCountInput,
+    workCount: authorFields.workCountInput,
   });
 
   showSuccessAlertElement();
@@ -120,7 +122,7 @@ function isNumeric(value) {
 }
 
 function isNotEntered(input) {
-  return !input.value || input.value.length === 0;
+  return !input || input.length === 0;
 }
 </script>
 
