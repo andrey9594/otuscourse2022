@@ -11,16 +11,16 @@
       :active-text-color="'#fff200'"
       :collapse-transition="false"
     >
-      <el-menu-item :index="{ name: 'books' }">
+      <el-menu-item :route="{ name: 'books' }" index="books">
         <span>Books</span>
       </el-menu-item>
-      <el-menu-item :index="{ name: 'addBook' }">
+      <el-menu-item :route="{ name: 'addBook' }" index="addBook">
         <span>New book</span>
       </el-menu-item>
-      <el-menu-item :index="{ name: 'authors' }">
+      <el-menu-item :route="{ name: 'authors' }" index="authors">
         <span>Authors</span>
       </el-menu-item>
-      <el-menu-item :index="{ name: 'addAuthor' }">
+      <el-menu-item :route="{ name: 'addAuthor' }" index="addAuthor">
         <span>New author</span>
       </el-menu-item>
     </el-menu>

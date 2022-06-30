@@ -1,17 +1,21 @@
-import { ref } from "vue";
+import { defineStore } from "pinia";
 
-export const authors = ref([]);
-
-export function clearAllAuthors() {
-  while (authors.value.length > 0) {
-    authors.value.pop();
-  }
-}
-
-export function addAuthor(author) {
-  authors.value.push(author);
-}
-
-export function deleteByIndex(index) {
-  authors.value.splice(index, 1);
-}
+export const useAuthorsStore = defineStore("authors", {
+  state: () => {
+    return { authors: [] };
+  },
+  getters: {},
+  actions: {
+    clearAllAuthors() {
+      while (this.authors.length > 0) {
+        this.authors.pop();
+      }
+    },
+    addAuthor(author) {
+      this.authors.push(author);
+    },
+    deleteByIndex(index) {
+      this.authors.splice(index, 1);
+    },
+  },
+});
