@@ -60,9 +60,11 @@
 </template>
 
 <script setup>
-import { addBook } from "@/store/books";
+import { useBooksStore } from "@/store/books";
 import { reactive, ref } from "vue";
 import { computed } from "vue";
+
+const booksStore = useBooksStore();
 
 const bookFields = reactive({
   isbn13Input: "",
@@ -108,7 +110,7 @@ function submitNewBook() {
     categories = bookFields.categoriesInput;
   }
 
-  addBook({
+  booksStore.addBook({
     isbn13: bookFields.isbn13Input,
     name: bookFields.nameInput,
     authors: bookFields.authorsInput,

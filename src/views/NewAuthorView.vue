@@ -50,9 +50,11 @@
 </template>
 
 <script setup>
-import { addAuthor } from "@/store/authors";
+import { useAuthorsStore } from "@/store/authors";
 import { reactive, ref } from "vue";
 import { computed } from "vue";
+
+const authorsStore = useAuthorsStore();
 
 const authorFields = reactive({
   nameInput: "",
@@ -90,7 +92,7 @@ function submitNewAuthor() {
     topWork = authorFields.topWorkInput;
   }
 
-  addAuthor({
+  authorsStore.addAuthor({
     name: authorFields.nameInput,
     birthDate: birthDate,
     topWork: topWork,

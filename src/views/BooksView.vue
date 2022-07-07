@@ -14,8 +14,11 @@
 <script setup>
 import ContentTable from "@/components/ContentTable.vue";
 import FindInput from "@/components/FindInput.vue";
-import { books, clearAllBooks, addBook, deleteByIndex } from "@/store/books";
+import { useBooksStore } from "@/store/books";
 import { fetchData } from "@/store/utils";
+
+const booksStore = useBooksStore();
+const books = booksStore.books;
 
 const tableHeader = [
   { columnData: "isbn13", columnLabel: "ISBN 13" },
@@ -28,7 +31,7 @@ const tableHeader = [
 ];
 
 function deleteDataByIndex(index) {
-  deleteByIndex(index);
+  booksStore.deleteByIndex(index);
 }
 
 async function findBooks(bookName) {
@@ -43,7 +46,7 @@ async function findBooks(bookName) {
     return;
   }
 
-  clearAllBooks();
+  booksStore.clearAllBooks();
 
   for (let item of result.items) {
     const volumeInfo = item.volumeInfo;
@@ -99,7 +102,7 @@ async function findBooks(bookName) {
       imageLink = imageLinks.smallThumbnail;
     }
 
-    addBook({
+    booksStore.addBook({
       isbn13: isbn,
       name: volumeInfo.title,
       authors: authors,

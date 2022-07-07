@@ -14,12 +14,7 @@
 <script setup>
 import ContentTable from "@/components/ContentTable.vue";
 import FindInput from "@/components/FindInput.vue";
-import {
-  authors,
-  clearAllAuthors,
-  addAuthor,
-  deleteByIndex,
-} from "@/store/authors";
+import { useAuthorsStore } from "@/store/authors";
 import { fetchData } from "@/store/utils";
 
 const tableHeader = [
@@ -29,8 +24,11 @@ const tableHeader = [
   { columnData: "workCount", columnLabel: "Work count" },
 ];
 
+const authorsStore = useAuthorsStore();
+const authors = authorsStore.authors;
+
 function deleteDataByIndex(index) {
-  deleteByIndex(index);
+  authorsStore.deleteByIndex(index);
 }
 
 async function findAuthors(authorName) {
@@ -48,7 +46,7 @@ async function findAuthors(authorName) {
     return;
   }
 
-  clearAllAuthors();
+  authorsStore.clearAllAuthors();
 
   for (let item of result.docs) {
     const workCount = item.work_count;
@@ -61,7 +59,7 @@ async function findAuthors(authorName) {
       birthDate = item.birth_date;
     }
 
-    addAuthor({
+    authorsStore.addAuthor({
       name: item.name,
       birthDate: birthDate,
       topWork: item.top_work,

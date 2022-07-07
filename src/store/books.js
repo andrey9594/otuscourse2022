@@ -1,17 +1,21 @@
-import { ref } from "vue";
+import { defineStore } from "pinia";
 
-export const books = ref([]);
-
-export function clearAllBooks() {
-  while (books.value.length > 0) {
-    books.value.pop();
-  }
-}
-
-export function addBook(book) {
-  books.value.push(book);
-}
-
-export function deleteByIndex(index) {
-  books.value.splice(index, 1);
-}
+export const useBooksStore = defineStore("books", {
+  state: () => {
+    return { books: [] };
+  },
+  getters: {},
+  actions: {
+    clearAllBooks() {
+      while (this.books.length > 0) {
+        this.books.pop();
+      }
+    },
+    addBook(book) {
+      this.books.push(book);
+    },
+    deleteByIndex(index) {
+      this.books.splice(index, 1);
+    },
+  },
+});
