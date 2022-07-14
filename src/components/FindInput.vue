@@ -1,6 +1,6 @@
 <template>
   <input class="find" v-model="findForText" @keyup.enter="find" />
-  <button @click="find">Search</button>
+  <button class="searchButton" @click="find">Search</button>
 </template>
 
 <script setup>
